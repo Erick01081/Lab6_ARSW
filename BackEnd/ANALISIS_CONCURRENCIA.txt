@@ -1,0 +1,5 @@
+Debido a que la clase InMemoryBlueprintPersistence no es Thread-safe, se debe modificar con el fin de poder hacer solicitudes de forma concurrente en el API. Para esto, utilizamos los metodos writelock().lock() y readlock().lock() de la interfaz ReadWriteLock.
+
+La metodologia es la siguiente, en caso de que, si el hilo necesita escribir sobre el recurso blueprints de tipo ConcurrentHashmap, el hilo adquiere un bloqueo de tipo lectura y si solo necesita leer, adquiere el bloqueo tipo lectura. Una vez termina de utilizar el recurso, libera el bloqueo.
+
+De dicha forma, se sigue la misma estructura para los metodos de lectura y escritura sobre el, recurso.
